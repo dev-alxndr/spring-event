@@ -1,0 +1,22 @@
+### Event를 발행해서 처리하고 싶어요.
+GET http://localhost:8080/posts/create
+
+### Event를 받고 싶어요 + Event를 처리하다가 Exception이 나면 발행한 로직도 Rollback하고 싶어요
+GET http://localhost:8080/posts/create/v1
+
+### v1 + Event를 비동기로 처리하고 싶어요 w/ @EnableAsync
+GET http://localhost:8080/posts/create/v2
+
+### v2 + 비동기 처리 중 Exception이 발생하면???
+GET http://localhost:8080/posts/create/v3
+# => Rollback 안됨
+
+### Transaction을 분리하고 싶어요
+GET http://localhost:8080/posts/create/v4
+# 이벤트를 처리하다가 에러가 나도 발행한 로직은 정상적으로 수행되길 원해요.
+
+###
+GET http://localhost:8080/posts/create/v5
+# Main 2초
+# Event Listener 2초
+# => Async 이기 때문에 2초 xx ms

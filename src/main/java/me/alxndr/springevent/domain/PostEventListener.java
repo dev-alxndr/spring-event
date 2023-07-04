@@ -7,6 +7,7 @@ import me.alxndr.springevent.domain.events.PostCreateEventV1;
 import me.alxndr.springevent.domain.events.PostCreateEventV2;
 import me.alxndr.springevent.domain.events.PostCreateEventV3;
 import me.alxndr.springevent.domain.events.PostCreateEventV4;
+import me.alxndr.springevent.domain.events.PostCreateEventV5;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -99,11 +100,12 @@ public class PostEventListener {
 	/**
 	 * v4 + Async
 	 */
-//	@TransactionalEventListener
-//	@Transactional(propagation = Propagation.REQUIRES_NEW)
-//	@Async
-	public void createPostEventListenerV5(PostCreateEventV4 event) {
+	@Async
+	@TransactionalEventListener
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void createPostEventListenerV5(PostCreateEventV5 event) {
 		log.info("V5 Event Listen");
+		log.info("V5 Thread Name : {}", Thread.currentThread().getName());
 		final Post fromEvent = Post.builder()
 				.content("From Event Listener v5")
 				.title("From Event Listener v5")
@@ -115,10 +117,6 @@ public class PostEventListener {
 			throw new RuntimeException(e);
 		}
 
-
 		postService.create(fromEvent);
-		log.info("V5 Complete");
 	}
-
-
 }

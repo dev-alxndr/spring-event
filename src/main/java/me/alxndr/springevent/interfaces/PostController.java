@@ -40,6 +40,8 @@ public class PostController {
 			postFacade.createV3(newPost);
 		} else if (version.equals("v4")) {
 			postFacade.createV4(newPost);
+		} else if (version.equals("v5")) {
+			postFacade.createV5(newPost);
 		}
 
 		return ResponseEntity.ok(null);

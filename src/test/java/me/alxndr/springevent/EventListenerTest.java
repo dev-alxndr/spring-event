@@ -49,7 +49,9 @@ public class EventListenerTest {
 
 		final Post newPost = postFacade.createV2(post);
 
-		assertThat(newPost.getId()).isNotNull();
+		final Post findPost = postRepository.findById(newPost.getId()).orElse(null);
+
+		assertThat(findPost.getId()).isNotNull();
 	}
 
 

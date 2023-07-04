@@ -10,6 +10,7 @@ import me.alxndr.springevent.domain.events.PostCreateEventV2;
 import me.alxndr.springevent.domain.events.PostCreateEventV2Exception;
 import me.alxndr.springevent.domain.events.PostCreateEventV3;
 import me.alxndr.springevent.domain.events.PostCreateEventV4;
+import me.alxndr.springevent.domain.events.PostCreateEventV5;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,6 +87,22 @@ public class PostFacade {
 		final Post newPost = postService.create(post);
 
 		eventPublisher.publishEvent(new PostCreateEventV4(newPost));
+
+		return newPost;
+	}
+
+
+	@Transactional
+	public Post createV5(Post post) {
+		final Post newPost = postService.create(post);
+
+		eventPublisher.publishEvent(new PostCreateEventV5(newPost));
+		log.info("V5 Facade Thread Name : {}", Thread.currentThread().getName());
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 
 		return newPost;
 	}
