@@ -31,7 +31,6 @@ public class PostFacade {
 		final Post newPost = postService.create(post);
 
 		eventPublisher.publishEvent(new PostCreateEvent(newPost));
-
 		return newPost;
 	}
 

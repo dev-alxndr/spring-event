@@ -2,12 +2,15 @@ package me.alxndr.springevent.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.alxndr.springevent.domain.events.Event;
 import me.alxndr.springevent.domain.events.PostCreateEvent;
 import me.alxndr.springevent.domain.events.PostCreateEventV1;
 import me.alxndr.springevent.domain.events.PostCreateEventV2;
+import me.alxndr.springevent.domain.events.PostCreateEventV2Exception;
 import me.alxndr.springevent.domain.events.PostCreateEventV3;
 import me.alxndr.springevent.domain.events.PostCreateEventV4;
 import me.alxndr.springevent.domain.events.PostCreateEventV5;
+import me.alxndr.springevent.infrastructure.PostRepository;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -22,6 +25,7 @@ public class PostEventListener {
 
 	private final PostService postService;
 
+	private final PostRepository postRepository;
 
 	/**
 	 * Event를 발행해서 처리하고 싶어요.
@@ -29,6 +33,8 @@ public class PostEventListener {
 	@EventListener
 	public void createPostEventListener(PostCreateEvent event) {
 		log.info("Event Listen");
+		final Post post = postRepository.findById(event.getPost().getId()).get();
+		log.info("Post = {}", post);
 	}
 
 	/**
@@ -65,7 +71,7 @@ public class PostEventListener {
 	 */
 	@Async
 	@EventListener
-	public void createPostEventListenerV2Exception(PostCreateEventV2 eventV2) {
+	public void createPostEventListenerV2Exception(PostCreateEventV2Exception eventV2) {
 		log.info("V2 Exception Event Listen");
 		throw new RuntimeException("V2 Exception");
 	}
@@ -119,4 +125,5 @@ public class PostEventListener {
 
 		postService.create(fromEvent);
 	}
+
 }

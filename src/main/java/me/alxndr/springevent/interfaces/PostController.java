@@ -29,6 +29,7 @@ public class PostController {
 				.build();
 
 		if (version == null) {
+			newPost.setTitle("LLLLLLLLLLL");
 			postFacade.create(newPost);
 		} else if (version.equals("v1")) {
 			postFacade.createV1(newPost);
