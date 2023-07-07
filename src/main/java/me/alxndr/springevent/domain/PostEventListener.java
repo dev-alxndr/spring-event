@@ -2,7 +2,6 @@ package me.alxndr.springevent.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.alxndr.springevent.domain.events.Event;
 import me.alxndr.springevent.domain.events.PostCreateEvent;
 import me.alxndr.springevent.domain.events.PostCreateEventV1;
 import me.alxndr.springevent.domain.events.PostCreateEventV2;
