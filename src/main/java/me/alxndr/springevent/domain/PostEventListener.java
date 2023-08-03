@@ -32,6 +32,7 @@ public class PostEventListener {
 	@EventListener
 	public void createPostEventListener(PostCreateEvent event) {
 		log.info("Event Listen");
+		log.info("Listener Thread = {}", Thread.currentThread().getName());
 		final Post post = postRepository.findById(event.getPost().getId()).get();
 		log.info("Post = {}", post);
 	}
